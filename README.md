@@ -28,6 +28,14 @@ python3 -m pytest -q
 
 The **single product demo** is `product/experience/index.html`, served by FastAPI at `http://127.0.0.1:8000/experience` after `./run.sh`. Reviewer actions, policy replay and audit use the Python API. The legacy dark Streamlit `product/app.py` is not the primary experience. The 4:12 video below is a recording of this same product, not a second demo. It is a screenshot-based walkthrough rather than a continuous screen recording.
 
+## Watch the demo
+
+![RefundOps Studio white UI animated preview](recording/RefundOps_Studio_Preview.gif)
+
+**[▶ Watch the full 4:12 demo video (MP4)](recording/RefundOps_White_Studio_Demo.mp4)** · [Open the video file](https://github.com/Or04/refundops-ai/blob/main/recording/RefundOps_White_Studio_Demo.mp4)
+
+The GIF is a short preview of the same connected Studio. The MP4 is a captioned screenshot-based walkthrough, not a continuous live recording. Run `./run.sh` for the interactive API-connected experience.
+
 ## Demo for business users
 
 **Watch the connected demo:** [4:12 white-UI walkthrough video](recording/RefundOps_White_Studio_Demo.mp4). The recording uses the local API through a browser bridge because direct localhost browser navigation is restricted in the recording environment.
