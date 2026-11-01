@@ -42,8 +42,6 @@ def decide(raw,policy=None):
     if str(r.get('fraud_flag','')).strip().lower() not in ('yes','no'):return out('review','Unknown fraud status','DATA_INVALID','high')
     reason=r['stated_reason'];note=' '.join(str(r.get(k,'') or '') for k in ('support_note','customer_note')).lower()
     if str(r.get('fraud_flag','')).strip().lower()=='yes':
-        if p['auto_stolen_card_confirmed'] and 'fraud team confirmed' in note:
-            return out('approve','Fraud team confirmation present; refund cardholder','FRAUD_CONFIRMED','high','Explicit fraud team confirmation in note (demo only)')
         return out('review','Fraud team verification required','FRAUD_HOLD','high')
     if a>float(p['manual_above_usd']):return out('review','Above manager review threshold','HIGH_AMOUNT','high')
     days=numeric(r.get('days_since_delivery'))
@@ -56,7 +54,6 @@ def decide(raw,policy=None):
     if reason=='never_arrived':return out('review','Carrier delivery proof/investigation must be checked','CARRIER_CHECK','high')
     if reason=='late_delivery':return out('review','Partial refund amount requires reviewer judgment','PARTIAL_DISCRETION')
     if reason=='wrong_item':
-        if p['auto_wrong_item'] and 'warehouse confirmed' in note:return out('approve','Warehouse confirmed picking error','WRONG_ITEM_CONFIRMED','medium','Support note keyword check, not independent warehouse verification')
         return out('review','Verify merchant picking error; policy requires full refund once confirmed','WRONG_ITEM_VERIFY')
     if reason not in ('wrong_size','changed_mind','arrived_damaged'):return out('review','Unknown reason','UNKNOWN_REASON','high')
     tenure=numeric(r.get('tenure_months'));prior=numeric(r.get('prior_refunds_12m'))

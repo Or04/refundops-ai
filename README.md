@@ -38,6 +38,67 @@ Both `product/experience/index.html` (API-connected) and `RefundOps_Studio_Demo.
 - **Solution design:** `docs/RefundOps_AI_Solution_Design.pdf`.
 - **Requirement audit:** `REQUIREMENTS_AUDIT.md`.
 
+## How a refund decision is made
+
+The engine is **rules-based**, not an LLM making payment decisions. An `approve` result means **eligible for automatic approval in this sandbox**, not that money was transferred.
+
+```mermaid
+flowchart TD
+    A[Incoming refund request CSV] --> B[Normalize fields and validate evidence]
+    B --> C{Required data valid?}
+    C -->|No| R[Human review: data gap]
+    C -->|Yes| D{Fraud flag = yes?}
+    D -->|Yes| F[Human review: fraud hold]
+    D -->|No| E{Amount above manager threshold?}
+    E -->|Yes| R
+    E -->|No| G{Reason requires investigation?}
+    G -->|Carrier, wrong item, late delivery, unknown| R
+    G -->|Changed mind, damage, wrong size| H{Policy exception or missing proof?}
+    H -->|Yes| R
+    H -->|No| I{Within auto cap and customer-history limits?}
+    I -->|No| R
+    I -->|Yes| J[Auto-eligible recommendation]
+    R --> K[Reviewer queue + read-only investigation]
+    K --> L[Approve / Reject / Escalate + rationale]
+    J --> M[Decision output + audit context]
+    L --> M
+```
+
+### Decision boundary: default demo policy
+
+| Check, in priority order | Automatic recommendation | Human-review trigger |
+|---|---|---|
+| Input quality | Valid positive amount, known fraud status and relevant fields | Missing/invalid fields or unknown fraud status |
+| Fraud | **Never** auto-approve a fraud-flagged case | Any `fraud_flag=yes`, including a note claiming confirmation |
+| High amount | Amount ≤ **$300** manager threshold | Above $300 |
+| Request reason | Supported low-risk cases (`wrong_size`, eligible `changed_mind`, eligible `arrived_damaged`) | Never arrived, late delivery, wrong item, unsupported reason |
+| Time / evidence | Change of mind within **14 days**; damage above **$50** needs photo evidence review | Outside window, missing delivery age, or unverified photo note |
+| Auto cohort | Amount ≤ **$50**, tenure ≥ **6 months**, prior refunds in 12 months ≤ **1** | Any limit exceeded or history missing |
+
+The **$50 / 6-month / 1-refund** cohort is a conservative *design assumption* for this exercise, not a rule established by the source policy notes. The $300 manager threshold is an assignment example implemented as a configurable default. A support-note keyword is **not verified evidence**. Cases requiring external confirmation stay in human review.
+
+**Worked examples** (default policy):
+
+- **$25, wrong size, 24-month customer, no prior refunds, no fraud** → `approve` / `LOW_RISK` (recommendation only).
+- **$320, any otherwise eligible reason** → `review` / `HIGH_AMOUNT` (manager threshold).
+- **$25, fraud flag yes, note says “fraud team confirmed”** → `review` / `FRAUD_HOLD` (untrusted note cannot override hold).
+- **$55, damaged item, no verified photo** → `review` / `PHOTO_REQUIRED`.
+
+### Manager changes: preview before publish
+
+```mermaid
+flowchart LR
+    P[Manager edits policy draft] --> V[Validate thresholds]
+    V --> S[Replay 251 historical + 21 pending cases]
+    S --> I[Compare changed decisions and new auto exposure]
+    I --> Q{Same draft + current policy version?}
+    Q -->|No| P
+    Q -->|Yes, with rationale| A[Activate new version]
+    A --> U[Audit entry and rollback history]
+```
+
+The preview shows **counterfactual classifications**, not proven savings or safety. Activation requires an exact matching preview and a written rationale. Unsafe free-text-based fraud/warehouse auto-approval switches are rejected; the decision engine also fails closed if they are passed directly. Reviewer actions are stored in local demo state, **not** executed as payments. A real launch requires independently verified fraud/warehouse evidence, payment controls, immutable audit storage, outcome monitoring and rollback triggers.
+
 ## Architecture
 
 CSV -> normalization -> deterministic, versioned policy engine -> auto-eligible OR prioritized human review. A bounded read-only investigation workflow retrieves evidence and provides an auditable trace. Reviewer actions and manager policy changes run through the local FastAPI service; historical replay uses the same engine. No payment calls. See `docs/ARCHITECTURE.md`.
@@ -56,7 +117,7 @@ AI-assisted code generation was used for the UI, engine, tests and documentation
 
 ## QA verification
 
-26 automated tests pass from the repository root. A reviewer cannot approve a fraud-flagged case in the API, repeated decisions are blocked, and activating a policy requires an exact current-version historical preview. The CLI supports caller-relative CSV paths. See `QA_REPORT.md`.
+Automated tests pass from the repository root (see CI for the current count). A reviewer cannot approve a fraud-flagged case in the API, repeated decisions are blocked, and activating a policy requires an exact current-version historical preview. The CLI supports caller-relative CSV paths. See `QA_REPORT.md`.
 
 ## Submission completeness
 

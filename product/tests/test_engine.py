@@ -12,5 +12,8 @@ def test_large():assert check(amount_usd=301).rule=='HIGH_AMOUNT'
 def test_missing_history():assert check(tenure_months='').rule=='MISSING_HISTORY'
 def test_partial_judgment():assert check(stated_reason='late_delivery').action=='review'
 def test_policy_preview():assert check(amount_usd=75).action=='review' and decide({**BASE,'amount_usd':75},{'auto_max_usd':100}).action=='approve'
-def test_stolen_confirmed_opt_in():
- assert decide({**BASE,'fraud_flag':'yes','support_note':'fraud team confirmed'},{'auto_stolen_card_confirmed':True}).action=='approve'
+def test_stolen_confirmed_opt_in_is_still_held():
+ assert decide({**BASE,'fraud_flag':'yes','support_note':'fraud team confirmed'},{'auto_stolen_card_confirmed':True}).rule=='FRAUD_HOLD'
+
+def test_warehouse_note_never_auto_approves():
+ assert decide({**BASE,'stated_reason':'wrong_item','support_note':'warehouse confirmed'},{'auto_wrong_item':True}).rule=='WRONG_ITEM_VERIFY'

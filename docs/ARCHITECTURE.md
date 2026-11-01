@@ -8,7 +8,7 @@ flowchart TD
  B --> C[Versioned deterministic policy engine]
  C -->|Eligible| D[Auto-approve recommendation only]
  C -->|Exception / uncertainty| E[Human review queue]
- E --> F[Reviewer: approve / reject / partial / escalate / request evidence]
+ E --> F[Reviewer: approve / reject / escalate]
  F --> G[Local audit state]
  H[Operations Manager] --> I[Draft policy]
  I --> J[Historical + pending replay]
@@ -24,7 +24,7 @@ flowchart TD
 - `cli.py`: batch processing on a new same-schema CSV; produces a decisions CSV.
 - `app.py`: Streamlit reviewer + policy manager UI; one-command demo.
 - `api.py` + `experience/index.html`: connected local API experience, bounded read-only investigation trace.
-- `RefundOps_Interactive_Demo.html`: offline visual product demo; local browser simulation, not wired to backend.
+- `RefundOps_Studio_Demo.html`: offline visual product demo; local browser simulation, not wired to backend.
 - `tests/`: engine, API and agent workflow tests.
 
 ## Agentic design: current vs proposed

@@ -13,7 +13,7 @@
 | Part 2: reviewer queue, context, actions, outcomes | `/experience`, `/api/overview`, `/api/review`, `/api/agent/investigate` | PASS at API/integration level; browser visual QA blocked |
 | Part 2: manager changes policy and previews impact | `/api/policy/simulate`, `/api/policy/activate`, `/api/policy/rollback` | PASS; activation now requires matching versioned preview |
 | One-command run on supplied or same-schema CSV | `./run.sh`; `./run_csv.sh input.csv output.csv` | PASS; caller-relative path issue fixed |
-| Automated tests | `python3 -m pytest -q` at repository root | PASS: **26 tests** |
+| Automated tests | `python3 -m pytest -q` at repository root | PASS: **27 tests** |
 | Clickable business demo | connected `/experience` plus offline Studio | PASS in code; not fully visually verified in current browser environment |
 | README, API key, architecture, AI coding tools reflection | `README.md`, `docs/ARCHITECTURE.md` | PASS; no API key needed by shipped deterministic system |
 | Max 8-slide write-up with boundary, evidence, metrics, AI/model/cost/eval, deferrals | `slides/RefundOps_AI_Executive_Pitch.pdf` | PASS on scope and length (8 slides); empirical LLM evaluation unavailable |
@@ -23,7 +23,7 @@
 
 ## QA executed
 
-- Unit/API regression: **26 passed**; root-level invocation.
+- Unit/API regression: **27 passed**; root-level invocation.
 - CLI: 21 pending records processed; **3 auto-eligible, 18 human review**.
 - Historical replay documented: 84 of 251 auto-eligible under current conservative policy. This is a rule-based classification, not evidence of financial safety.
 - JavaScript syntax: `node --check` passes for connected UI.
@@ -53,3 +53,10 @@
 ## Release recommendation
 
 **GO for a clearly labeled sandbox take-home demonstration after CI passes. NO-GO for financial production use.** Prefer connected `/experience` as implementation evidence; label offline Studio as a visual simulation. Re-record white UI before final email if possible.
+
+## 2026-11-01 follow-up QA and README visualization
+
+- Added a GitHub-rendered Mermaid decision tree, manager preview flow, default-rule table and worked refund examples to the root README.
+- Removed two unsafe experimental auto-approval paths in the underlying engine: unverified fraud-team and warehouse note phrases can no longer override a human-review hold even when a caller passes unsafe policy flags directly.
+- Added/updated engine regression tests and corrected the architecture documentation to match the shipped actions and filenames.
+- The white demo is a captioned screenshot-based walkthrough, **not a continuous screen recording**. This is a submission-format caveat, not a verified full match.
