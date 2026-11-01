@@ -26,6 +26,8 @@ cd product && python3 -m pytest -q
 
 ## Demo for business users
 
+**Watch the connected demo:** [3–5 minute screen recording](recording/RefundOps_Connected_Demo.mp4). The recording uses the local API through a browser bridge because direct localhost browser navigation is restricted in the recording environment.
+
 - **Connected app (primary evidence):** `./run.sh`, then `/experience`. Show reviewer queue, investigation, decision with rationale, manager policy draft, historical replay and activation.
 - **Polished offline UX:** open `RefundOps_Studio_Demo.html` in Chrome. It embeds assignment CSV data and mirrors the policy's conservative decision boundary; browser-only reviewer/policy actions are simulated and not connected to Python.
 - **Presentation:** `slides/RefundOps_AI_Executive_Pitch.pdf` (8 slides).
@@ -50,4 +52,4 @@ AI-assisted code generation was used for the UI, engine, tests and documentation
 
 ## Submission completeness
 
-**Still required before sending:** (1) publish this folder to a Git repository and include its URL; (2) capture a genuine 3–5 minute screen recording of the connected app and link/embed it. The source brief explicitly requires both. A recording script is provided under `recording/`. Do not label the storyboard GIF or static screenshots as a recording.
+**Repository:** https://github.com/Or04/refundops-ai. **Screen recording:** `recording/RefundOps_Connected_Demo.mp4` is a silent 3–5 minute walkthrough with captions of the connected FastAPI-backed demo. The video is included as a fallback for reviewers who cannot run the app. No actual payment is processed.
