@@ -13,11 +13,11 @@
 | Max 8-slide presentation | Included, 8 slides | `slides/` |
 | AI coding tools reflection | Included | `README.md` |
 | Click-through business demo | Included | `product/RefundOps_Case_Workspace.html` |
-| Real 3–5 minute recording | **MISSING** | Recording script supplied |
-| Public Git repository URL | **MISSING** | ZIP ready to upload |
+| Real 3–5 minute recording | **COMPLETE** | `recording/RefundOps_Connected_Demo.mp4`, 4m17s, silent captions |
+| Public Git repository URL | **COMPLETE** | https://github.com/Or04/refundops-ai |
 | Hosted live demo | Not required; not provided | Local / offline demos |
 
 ## New UI QA
 - Browser-rendered with Playwright `page.set_content` (the environment blocks file:// and localhost navigation).
 - Verified 21 queue rows, RF-1070 case view, fraud approval disabled, reviewer action recorded in ledger, policy replay after $50→$75.
-- A browser video capture was attempted but the environment could not finalize it. A genuine 3–5 minute narrated screen recording is still required.
+- A completed 4m17s browser recording of the connected app is included; it is captioned and silent (not narrated).
