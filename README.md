@@ -42,7 +42,7 @@ CSV -> normalization -> deterministic, versioned policy engine -> auto-eligible 
 
 ## AI coding tools reflection
 
-AI-assisted code generation was used for the UI, engine, tests and documentation. One AI-suggested shortcut to auto-approve fraud cases on the basis of a free-text phrase such as âfraud team confirmedâ was **rejected for production**: untrusted notes cannot establish authenticated approval. The connected API blocks these unsafe auto-approval toggles. The work was checked against source CSVs, automated tests and replay.
+AI-assisted code generation was used for the UI, engine, tests and documentation. One AI-suggested shortcut to auto-approve fraud cases on the basis of a free-text phrase such as “fraud team confirmed” was **rejected for production**: untrusted notes cannot establish authenticated approval. The connected API blocks these unsafe auto-approval toggles. The work was checked against source CSVs, automated tests and replay.
 
 ## Evaluation and limitations
 
@@ -50,4 +50,4 @@ AI-assisted code generation was used for the UI, engine, tests and documentation
 
 ## Submission completeness
 
-**Still required before sending:** (1) publish this folder to a Git repository and include its URL; (2) capture a genuine 3â5 minute screen recording of the connected app and link/embed it. The source brief explicitly requires both. A recording script is provided under `recording/`. Do not label the storyboard GIF or static screenshots as a recording.
+**Still required before sending:** (1) publish this folder to a Git repository and include its URL; (2) capture a genuine 3–5 minute screen recording of the connected app and link/embed it. The source brief explicitly requires both. A recording script is provided under `recording/`. Do not label the storyboard GIF or static screenshots as a recording.
