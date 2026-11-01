@@ -1,6 +1,6 @@
 # RefundOps AI | Windward Applied AI Engineer Home Assignment
 
-**Submission scope:** a conservative refund decision engine, connected reviewer and policy-manager workflows, tests, historical replay, and a standalone UX concept. This is a sandbox: no real refunds are executed.
+**Submission scope:** a conservative refund decision engine, connected reviewer and policy-manager workflows, tests, historical replay, and a unified white Studio design for both connected and standalone experiences. This is a sandbox: no real refunds are executed.
 
 ## Start in one command
 
@@ -10,7 +10,7 @@ Requires Python 3.10+ and an internet connection on first run to install depende
 ./run.sh
 ```
 
-Open `http://127.0.0.1:8000/experience` for the **connected local product**. Its queue, decisions, policy replay and audit are backed by the Python API and engine.
+Open `http://127.0.0.1:8000/experience` for the **white RefundOps Studio connected product**. Its queue, decisions, policy replay and audit are backed by the Python API and engine.
 
 To run a new CSV with the same columns:
 
@@ -24,12 +24,16 @@ To run tests:
 cd product && python3 -m pytest -q
 ```
 
+## One visual language, two execution modes
+
+Both `product/experience/index.html` (API-connected) and `RefundOps_Studio_Demo.html` (offline showcase) use the white, restrained RefundOps Studio visual language. **Use the connected app for functional verification.** The legacy dark Streamlit `product/app.py` is not the main experience. The existing recording was captured before the connected UI restyle and therefore shows the older dark styling; the interactions it demonstrates remain valid.
+
 ## Demo for business users
 
 **Watch the connected demo:** [3–5 minute screen recording](recording/RefundOps_Connected_Demo.mp4). The recording uses the local API through a browser bridge because direct localhost browser navigation is restricted in the recording environment.
 
-- **Connected app (primary evidence):** `./run.sh`, then `/experience`. Show reviewer queue, investigation, decision with rationale, manager policy draft, historical replay and activation.
-- **Polished offline UX:** open `RefundOps_Studio_Demo.html` in Chrome. It embeds assignment CSV data and mirrors the policy's conservative decision boundary; browser-only reviewer/policy actions are simulated and not connected to Python.
+- **Connected white Studio (primary evidence):** `./run.sh`, then `/experience`. Show reviewer queue, investigation, decision with rationale, manager policy draft, historical replay and activation.
+- **Standalone white Studio (offline preview):** open `RefundOps_Studio_Demo.html` in Chrome. It embeds assignment CSV data and mirrors the policy's conservative decision boundary; browser-only reviewer/policy actions are simulated and not connected to Python.
 - **Presentation:** `slides/RefundOps_AI_Executive_Pitch.pdf` (8 slides).
 - **Solution design:** `docs/RefundOps_AI_Solution_Design.pdf`.
 - **Requirement audit:** `REQUIREMENTS_AUDIT.md`.
