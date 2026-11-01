@@ -13,7 +13,7 @@ Source: `Applied AI Engineer – Home Assignment(1).docx`, pages 1–3.
 | Click-through demo of both workflows | `./run.sh` -> `/experience`; standalone `RefundOps_Studio_Demo.html` | Implemented; offline Studio is a simulation |
 | README with setup, API key, architecture, AI coding tools reflection | `README.md` | Included |
 | Write-up max 8 slides with before/after, boundary/evidence, metrics/rollback, AI model/cost/eval, deferred items | `slides/RefundOps_AI_Executive_Pitch.pptx` and `.pdf` | 8 slides; LLM evaluation is explicitly not run |
-| 3–5 minute real screen recording | `recording/RefundOps_Connected_Demo.mp4` (4m17s, captioned, silent) | **COMPLETE** |
+| 3–5 minute real screen recording | `recording/RefundOps_White_Studio_Demo.mp4` (4m17s, captioned, silent) | **COMPLETE** |
 | Link to Git repo | https://github.com/Or04/refundops-ai | **COMPLETE** |
 | Send to named recipients within 2 days | Not sent | **NOT COMPLETE** |
 

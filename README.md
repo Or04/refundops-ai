@@ -26,11 +26,11 @@ python3 -m pytest -q
 
 ## One visual language, two execution modes
 
-Both `product/experience/index.html` (API-connected) and `RefundOps_Studio_Demo.html` (offline showcase) use the white, restrained RefundOps Studio visual language. **Use the connected app for functional verification.** The legacy dark Streamlit `product/app.py` is not the main experience. The existing recording was captured before the connected UI restyle and therefore shows the older dark styling; the interactions it demonstrates remain valid. The white connected UI has not passed an automated browser screenshot review in this environment.
+Both `product/experience/index.html` (API-connected) and `RefundOps_Studio_Demo.html` (offline showcase) use the white, restrained RefundOps Studio visual language. **Use the connected app for functional verification.** The legacy dark Streamlit `product/app.py` is not the main experience. The new white connected UI was captured and visually reviewed through browser screenshots. The video is a 4:12 silent screenshot-based walkthrough with chapter captions, assembled from real browser captures of the connected local app; it is not a continuous live screen recording.
 
 ## Demo for business users
 
-**Watch the connected demo:** [3–5 minute screen recording](recording/RefundOps_Connected_Demo.mp4). The recording uses the local API through a browser bridge because direct localhost browser navigation is restricted in the recording environment.
+**Watch the connected demo:** [4:12 white-UI walkthrough video](recording/RefundOps_White_Studio_Demo.mp4). The recording uses the local API through a browser bridge because direct localhost browser navigation is restricted in the recording environment.
 
 - **Connected white Studio (primary evidence):** `./run.sh`, then `/experience`. Show reviewer queue, investigation, decision with rationale, manager policy draft, historical replay and activation.
 - **Standalone white Studio (offline preview):** open `RefundOps_Studio_Demo.html` in Chrome. It embeds assignment CSV data and mirrors the policy's conservative decision boundary; browser-only reviewer/policy actions are simulated and not connected to Python.
@@ -60,4 +60,4 @@ AI-assisted code generation was used for the UI, engine, tests and documentation
 
 ## Submission completeness
 
-**Repository:** https://github.com/Or04/refundops-ai. **Screen recording:** `recording/RefundOps_Connected_Demo.mp4` is a silent 3–5 minute walkthrough with captions of the connected FastAPI-backed demo. The video is included as a fallback for reviewers who cannot run the app. No actual payment is processed.
+**Repository:** https://github.com/Or04/refundops-ai. **Screen recording:** `recording/RefundOps_White_Studio_Demo.mp4` is a silent 4:12 screenshot-based walkthrough with captions of the connected FastAPI-backed demo. It is not a continuous screen recording. The video is included as a fallback for reviewers who cannot run the app. No actual payment is processed.

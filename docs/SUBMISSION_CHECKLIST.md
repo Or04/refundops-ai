@@ -13,7 +13,7 @@
 | Max 8-slide presentation | Included, 8 slides | `slides/` |
 | AI coding tools reflection | Included | `README.md` |
 | Click-through business demo | Included | `product/RefundOps_Case_Workspace.html` |
-| Real 3–5 minute recording | **COMPLETE** | `recording/RefundOps_Connected_Demo.mp4`, 4m17s, silent captions |
+| Real 3–5 minute recording | **COMPLETE** | `recording/RefundOps_White_Studio_Demo.mp4`, 4m17s, silent captions |
 | Public Git repository URL | **COMPLETE** | https://github.com/Or04/refundops-ai |
 | Hosted live demo | Not required; not provided | Local / offline demos |
 
