@@ -1,6 +1,6 @@
 # RefundOps AI | Windward Applied AI Engineer Home Assignment
 
-**Submission scope:** a conservative refund decision engine, connected reviewer and policy-manager workflows, tests, historical replay, and a unified white Studio design for both connected and standalone experiences. This is a sandbox: no real refunds are executed.
+**Submission scope:** a conservative refund decision engine, connected reviewer and policy-manager workflows, tests, historical replay, and one unified white Studio experience connected to the Python API. This is a sandbox: no real refunds are executed.
 
 ## Start in one command
 
@@ -24,16 +24,15 @@ To run tests:
 python3 -m pytest -q
 ```
 
-## One visual language, two execution modes
+## One demo: connected RefundOps Studio
 
-Both `product/experience/index.html` (API-connected) and `RefundOps_Studio_Demo.html` (offline showcase) use the white, restrained RefundOps Studio visual language. **Use the connected app for functional verification.** The legacy dark Streamlit `product/app.py` is not the main experience. The new white connected UI was captured and visually reviewed through browser screenshots. The video is a 4:12 silent screenshot-based walkthrough with chapter captions, assembled from real browser captures of the connected local app; it is not a continuous live screen recording.
+The **single product demo** is `product/experience/index.html`, served by FastAPI at `http://127.0.0.1:8000/experience` after `./run.sh`. Reviewer actions, policy replay and audit use the Python API. The legacy dark Streamlit `product/app.py` is not the primary experience. The 4:12 video below is a recording of this same product, not a second demo. It is a screenshot-based walkthrough rather than a continuous screen recording.
 
 ## Demo for business users
 
 **Watch the connected demo:** [4:12 white-UI walkthrough video](recording/RefundOps_White_Studio_Demo.mp4). The recording uses the local API through a browser bridge because direct localhost browser navigation is restricted in the recording environment.
 
 - **Connected white Studio (primary evidence):** `./run.sh`, then `/experience`. Show reviewer queue, investigation, decision with rationale, manager policy draft, historical replay and activation.
-- **Standalone white Studio (offline preview):** open `RefundOps_Studio_Demo.html` in Chrome. It embeds assignment CSV data and mirrors the policy's conservative decision boundary; browser-only reviewer/policy actions are simulated and not connected to Python.
 - **Presentation:** `slides/RefundOps_AI_Executive_Pitch.pdf` (8 slides).
 - **Solution design:** `docs/RefundOps_AI_Solution_Design.pdf`.
 - **Requirement audit:** `REQUIREMENTS_AUDIT.md`.
