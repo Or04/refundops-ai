@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 
 def test_overview_has_real_pending():
     c=TestClient(app);r=c.get('/api/overview');assert r.status_code==200
-    d=r.json();assert len(d['items'])==len(__import__('pandas').read_csv('data/pending.csv'))
+    d=r.json();assert len(d['items'])==len(__import__('pandas').read_csv(__import__('pathlib').Path(__file__).resolve().parents[1] / 'data/pending.csv'))
 
 def test_simulation_identity_has_no_changes():
     impact=simulation(DEFAULT_POLICY)

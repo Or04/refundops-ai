@@ -6,7 +6,7 @@
 | One-command local web app | Implemented | `cd product && ./run.sh` |
 | Reviewer queue, actions and rationale | Implemented locally | `product/app.py`, `product/api.py` |
 | Manager rule change and before/after preview | Implemented locally | `product/app.py`, `product/api.py` |
-| Tests | 22 passed in build environment | `product/tests/` |
+| Tests | 26 passed in build environment | `product/tests/` |
 | Architecture sketch | Included | `docs/ARCHITECTURE.md` |
 | AI model, rough cost, rationale | Included as proposed, not run | `docs/EXECUTIVE_BRIEF.md` |
 | Evaluation and rollback | Included, historical replay only | `docs/EXECUTIVE_BRIEF.md` |

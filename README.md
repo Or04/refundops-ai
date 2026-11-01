@@ -21,12 +21,12 @@ To run a new CSV with the same columns:
 To run tests:
 
 ```bash
-cd product && python3 -m pytest -q
+python3 -m pytest -q
 ```
 
 ## One visual language, two execution modes
 
-Both `product/experience/index.html` (API-connected) and `RefundOps_Studio_Demo.html` (offline showcase) use the white, restrained RefundOps Studio visual language. **Use the connected app for functional verification.** The legacy dark Streamlit `product/app.py` is not the main experience. The existing recording was captured before the connected UI restyle and therefore shows the older dark styling; the interactions it demonstrates remain valid.
+Both `product/experience/index.html` (API-connected) and `RefundOps_Studio_Demo.html` (offline showcase) use the white, restrained RefundOps Studio visual language. **Use the connected app for functional verification.** The legacy dark Streamlit `product/app.py` is not the main experience. The existing recording was captured before the connected UI restyle and therefore shows the older dark styling; the interactions it demonstrates remain valid. The white connected UI has not passed an automated browser screenshot review in this environment.
 
 ## Demo for business users
 
@@ -53,6 +53,10 @@ AI-assisted code generation was used for the UI, engine, tests and documentation
 ## Evaluation and limitations
 
 21 pending: 3 auto-eligible / 18 review. 251 historical: 84 auto-eligible / 167 review. Historical agreement is **not** proof of financial safety, model accuracy or causality. A labeled holdout, shadow-mode evaluation and production outcomes monitoring are required before enabling money movement. No authentication, production audit store, live LLM, payment integration or deployment is claimed.
+
+## QA verification
+
+26 automated tests pass from the repository root. A reviewer cannot approve a fraud-flagged case in the API, repeated decisions are blocked, and activating a policy requires an exact current-version historical preview. The CLI supports caller-relative CSV paths. See `QA_REPORT.md`.
 
 ## Submission completeness
 

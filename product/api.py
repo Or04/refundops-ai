@@ -26,7 +26,7 @@ def view():
     s=load_state(); items=[]
     for r in records('pending.csv'):
         result=decide(r,s['policy']); item={**r,**result.__dict__}; manual=s['reviews'].get(str(r['request_id']))
-        item['review_decision']=manual;item['status']='resolved' if manual else ('auto_eligible' if result.action=='approve' else 'needs_review')
+        item['review_decision']=manual;item['status']='resolved' if manual and manual.get('decision') in ('approve','reject') else ('escalated' if manual and manual.get('decision')=='escalate' else ('auto_eligible' if result.action=='approve' else 'needs_review'))
         items.append(item)
     return items
 
@@ -56,7 +56,10 @@ def review(request_id:str, payload:Review):
     if payload.decision not in ('approve','reject','escalate'):raise HTTPException(400,'Invalid decision')
     if not payload.note.strip():raise HTTPException(400,'Review note is required')
     if request_id not in {str(x['request_id']) for x in records('pending.csv')}:raise HTTPException(404,'Request not found')
-    if next(x for x in view() if str(x['request_id'])==request_id)['status']=='auto_eligible':raise HTTPException(409,'Auto-eligible requests are not in the human review queue')
+    case=next(x for x in view() if str(x['request_id'])==request_id)
+    if case['status']=='auto_eligible':raise HTTPException(409,'Auto-eligible requests are not in the human review queue')
+    if case['status'] in ('resolved','escalated'):raise HTTPException(409,'Case already has a reviewer decision')
+    if payload.decision=='approve' and str(case.get('fraud_flag','')).strip().lower()=='yes':raise HTTPException(409,'Fraud-flagged case cannot be approved without verified fraud-team evidence')
     s=load_state();s['reviews'][request_id]={'decision':payload.decision,'note':payload.note.strip(),'at':now(),'actor':'Demo reviewer'}
     s['audit'].append({'type':'REVIEW_DECISION','request_id':request_id,'decision':payload.decision,'note':payload.note.strip(),'at':now()});save(s)
     return {'ok':True,'review':s['reviews'][request_id]}
@@ -83,14 +86,25 @@ def simulation(proposed):
     return {'pending_changes':pending_changes,'history_changes':historical_changes,'historical_changed_count':len(historical_changes),'historical_changed_amount_usd':round(sum(x['amount_usd'] or 0 for x in historical_changes),2),'historical_new_auto_count':sum(x['before']!='approve' and x['after']=='approve' for x in historical_changes),'historical_new_auto_exposure_usd':round(sum(x['amount_usd'] or 0 for x in historical_changes if x['before']!='approve' and x['after']=='approve'),2),'historical_new_auto_cases':[{'request_id':x['request_id'],'amount_usd':x['amount_usd'],'outcome_note':next((str(r.get('outcome_note','')) for r in history if str(r['request_id'])==str(x['request_id'])),''),'historical_decision':next((str(r.get('decision','')) for r in history if str(r['request_id'])==str(x['request_id'])),''),'warning':'Historical decisions are noisy and not ground truth'} for x in historical_changes if x['before']!='approve' and x['after']=='approve'][:30],'new_auto_count':len(newly_approved),'new_auto_exposure_usd':round(sum(x['amount_usd'] or 0 for x in newly_approved),2),'warnings':warnings,'before_auto_count':sum(decide(r,old).action=='approve' for r in pending),'after_auto_count':sum(decide(r,new).action=='approve' for r in pending)}
 @app.post('/api/policy/simulate')
 def simulate(p:Policy):
-    validate_policy(p);return simulation(p.model_dump(exclude={'rationale','expected_version'}))
+    validate_policy(p)
+    proposed=p.model_dump(exclude={'rationale','expected_version'})
+    impact=simulation(proposed)
+    state=load_state()
+    state['last_preview']={'version':state['version'],'policy':proposed,'at':now()}
+    save(state)
+    return impact
 @app.post('/api/policy/activate')
 def activate(p:Policy):
     validate_policy(p)
     if p.expected_version is not None and p.expected_version!=load_state()['version']:raise HTTPException(409,'Policy version changed. Re-run the simulation before activation')
     if not p.rationale.strip():raise HTTPException(400,'Change rationale required')
-    s=load_state();new=p.model_dump(exclude={'rationale','expected_version'});impact=simulation(new)
+    s=load_state();new=p.model_dump(exclude={'rationale','expected_version'})
+    preview=s.get('last_preview')
+    if not preview or preview.get('version')!=s['version'] or preview.get('policy')!=new:
+        raise HTTPException(409,'Simulate this exact policy against the current version before activation')
+    impact=simulation(new)
     if impact['warnings'] and (new['auto_stolen_card_confirmed'] or new['auto_wrong_item']):raise HTTPException(400,'Unverified text evidence cannot be used to activate high-risk auto-approval rules')
+    s.pop('last_preview',None)
     old=s['policy'];s.setdefault('policy_history',[]).append({'version':s['version'],'policy':old,'at':now()});s['policy']=new;s['version']+=1
     s['audit'].append({'type':'POLICY_ACTIVATED','version':s['version'],'at':now(),'rationale':p.rationale,'before':old,'after':new,'impact':impact});save(s)
     return {'ok':True,'version':s['version'],'impact':impact}

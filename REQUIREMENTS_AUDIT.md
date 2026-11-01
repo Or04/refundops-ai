@@ -9,7 +9,7 @@ Source: `Applied AI Engineer – Home Assignment(1).docx`, pages 1–3.
 | Reviewer queue, context, actions, post-decision | `product/api.py`, `product/experience/index.html` | Connected local implementation |
 | Manager changes rule without engineer, previews before live | `product/api.py`, `product/experience/index.html` | Connected local implementation |
 | Run with one command on pending.csv or same-schema CSV | `run.sh`, `run_csv.sh`, `product/cli.py` | Implemented |
-| Tests | `product/tests/` | 22 passed on 2026-11-01 |
+| Tests | `product/tests/` | 26 passed on 2026-11-01 |
 | Click-through demo of both workflows | `./run.sh` -> `/experience`; standalone `RefundOps_Studio_Demo.html` | Implemented; offline Studio is a simulation |
 | README with setup, API key, architecture, AI coding tools reflection | `README.md` | Included |
 | Write-up max 8 slides with before/after, boundary/evidence, metrics/rollback, AI model/cost/eval, deferred items | `slides/RefundOps_AI_Executive_Pitch.pptx` and `.pdf` | 8 slides; LLM evaluation is explicitly not run |
@@ -19,7 +19,7 @@ Source: `Applied AI Engineer – Home Assignment(1).docx`, pages 1–3.
 
 ## QA performed
 
-- Python tests: **22 passed**.
+- Python tests: **26 passed**.
 - Batch CLI on supplied `pending.csv`: **21 processed; 3 auto-eligible; 18 human review**.
 - Slide deck: **8 slides**.
 - Standalone Studio initially disagreed with the Python engine on two historical records due to `$43` amount parsing and `damaged` alias. Fixed. Historical default replay now matches: **84/251**; pending **3/21**.
